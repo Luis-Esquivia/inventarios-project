@@ -1,0 +1,43 @@
+<div class="card">
+  <h2>Productos</h2>
+  <input #filtro type="text" placeholder="Buscar por nombre" (input)="buscar(filtro.value)">
+</div>
+
+<div class="card">
+  <h3>{{ editandoId ? 'Editar' : 'Crear' }} producto</h3>
+  <form [formGroup]="productoForm" (ngSubmit)="guardar()">
+    <input formControlName="codigo" placeholder="Código">
+    <input formControlName="nombre" placeholder="Nombre">
+    <input formControlName="precio" type="number" placeholder="Precio">
+    <input formControlName="stockActual" type="number" placeholder="Stock actual">
+    <select formControlName="categoriaId">
+      <option [ngValue]="null">Seleccione categoría</option>
+      <option *ngFor="let categoria of categorias" [ngValue]="categoria.id">{{ categoria.nombre }}</option>
+    </select>
+    <button type="submit">Guardar</button>
+    <button type="button" (click)="limpiar()">Limpiar</button>
+  </form>
+</div>
+
+<div class="card">
+  <table>
+    <thead>
+      <tr>
+        <th>Código</th><th>Nombre</th><th>Precio</th><th>Stock</th><th>Categoría</th><th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let producto of productos">
+        <td>{{ producto.codigo }}</td>
+        <td>{{ producto.nombre }}</td>
+        <td>{{ producto.precio }}</td>
+        <td>{{ producto.stockActual }}</td>
+        <td>{{ producto.categoria.nombre }}</td>
+        <td>
+          <button (click)="editar(producto)">Editar</button>
+          <button (click)="eliminar(producto.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

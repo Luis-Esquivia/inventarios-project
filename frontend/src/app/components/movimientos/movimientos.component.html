@@ -1,0 +1,31 @@
+<div class="card">
+  <h2>Movimientos de inventario</h2>
+  <form [formGroup]="movimientoForm" (ngSubmit)="registrar()">
+    <select formControlName="productoId" (change)="cargarHistorial($any($event.target).value)">
+      <option [ngValue]="null">Seleccione producto</option>
+      <option *ngFor="let producto of productos" [ngValue]="producto.id">{{ producto.nombre }}</option>
+    </select>
+    <select formControlName="tipoMovimiento">
+      <option value="ENTRADA">ENTRADA</option>
+      <option value="SALIDA">SALIDA</option>
+    </select>
+    <input formControlName="cantidad" type="number" min="1" placeholder="Cantidad">
+    <button type="submit">Registrar</button>
+  </form>
+</div>
+
+<div class="card">
+  <h3>Historial del producto</h3>
+  <table>
+    <thead>
+      <tr><th>Fecha</th><th>Tipo</th><th>Cantidad</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let mov of historial">
+        <td>{{ mov.fecha | date:'short' }}</td>
+        <td>{{ mov.tipoMovimiento }}</td>
+        <td>{{ mov.cantidad }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
